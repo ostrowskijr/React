@@ -1,17 +1,19 @@
-import React from 'react';
+// Import do react-dom que serve para interagirmos com o DOM do documento HTML.
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import App from './App'
+// Importando arquivo css
+import './index.css'
+// Recuperando o elemento do html com Id=root.
+const element = document.getElementById('root');
 
+// Criar const com tag Html
+const nome = <strong>Bem Vindo ao React: Ostrowskijr.</strong>;
+
+// Setar o texto 'Olá React!' no elemento da página
+// Podemos utilizar código html para renderizar dentro da página, utilizando a sintaxe JSX, para utilizar
+// precisamos importar React(Acredito que nas versões mais recentes do React não seja mais necessário.)
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <App nome={nome}/>
+    ,
+    element
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
