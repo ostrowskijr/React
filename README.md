@@ -1,70 +1,108 @@
-# Getting Started with Create React App
+<div align='center'>
+    <img src="./public/logo192.png"/>
+    <h1>Fundamentos React</h1>
+</div>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Sobre
+Curso de React + Redux da Cod3r do instrutor Leonardo Leitão, modulo de fundamentos do React, 1° Modulo sobre fundamentos do framework.
+#
+## Indice
+- [Criando o Projeto](#Criando-o-Projeto)
+- [Primeiro Componente](#Primeiro-Componente])
+- [Componente com Parâmetro](#Componente-com-Parâmetro)
+- [Fragmento React](#Fragmento-React)
+- [Desafio Aleatório](#Desafio-Aleatório)
+- [Componentes Filhos](#Componentes-Filhos)
+- [Repetições](#Repetições)
+- [Desafio Table](#Desafio-Table)
+- [Renderização condicional](#Renderização-condicional)
+- [Comunição](#Comunição)
+- [Componente com Estado](#Componente-com-Estado)
+- [Componente Controlado](#Componente-Controlado)
+- [Contador](#contador)
+- [Dasafio Mega-Sena](#desafio-mega-sena)
+#
+### Criando o Projeto
+```bash
+    # Comando para criação do projeto React
+    $ npx create nome_projeto
 
-## Available Scripts
+    # Após a criação executar projeto
+    $ npm start
+```
+### Primeiro Componente
 
-In the project directory, you can run:
+### Componente com Parâmetro
 
-### `npm start`
+### Fragmento React
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Desafio Aleatório
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Componentes Filhos
 
-### `npm test`
+### Repetições Laço
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Desafio Table
 
-### `npm run build`
+### Renderização condicional
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Comunição
+- Direta 
+    - Comunição direta ocorre com a passagem de parâmetros do componente pai para o componente filho via props, conforme exemplo abaixo:
+        ```bash
+        export default (props) => {
+            return (
+                <div>
+                    <DiretaFilho nome='Luis' idade={34} bool={true}></DiretaFilho>
+                    <DiretaFilho nome='Isadora' idade={6} bool={false}></DiretaFilho>
+                </div>
+            );
+        };
+        ```
+- Indireta
+    - Comunicação indireta consiste na passagem de informações de parâmetros do componente filho para o pai, está operação é realizada através da chamada de uma function do componente pai passada via props para o componente filho, conforme exemplo abaixo:
+        ```bash
+            // Função para receber dados enviados pelo componente filho    
+            function enviarInformacoes(params){
+                nome = params.nome;
+                idade = params.idade;
+                nerd = params.nerd;
+            };
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+            // Passagem da função para o componente filho via props
+            <IndiretaFilho infoPai={enviarInformacoes}/>
+            
+            // Chamada da função no componete filho
+            export default (props) => {
+                const {infoPai} = props;
+                return (
+                    <div>
+                        <div>Filho</div>
+                        <button onClick={ (e)=> infoPai({'nome': 'Luis', 'idade' : 34, 'nerd': true}) }>
+                            Fornecer Info Pai
+                        </button>
+                    </div> 
+                );
+            };
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+        ```
 
-### `npm run eject`
+### Componente com Estado
+- Para realizar controle de estado em um componente React, devemos importar a Redux - useState, este redux tem a função de gerenciar o estado de um componente, conforme exemplo abaixo:
+    ```bash
+    import React, { useState } from 'react';
+    
+    /* useState seta estado do objeto, o mesmo retorna um array de 2 posições a 
+       1-É o valor do dado e a 2-É o nome da função para setar o valor */
+    const [nome, setNome] = useState('?');
+    // Para setar o novo valor em nome utilizamos a função setNome
+    setNome(params.nome);
+    // Para apresentar o valor utilizamos a const nome.
+    Nome: {nome}
+    ```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Componente Controlado
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Contador
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Dasafio Mega-Sena
