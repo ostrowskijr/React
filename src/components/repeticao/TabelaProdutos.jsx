@@ -12,17 +12,20 @@ export default (props) => {
                     <th>Nome</th>
                     <th>Preço</th>
                 </tr>
-                {
-                    produtos.map((produto, index) => {
-                        return (
-                            <tr key={produto.id} border='0' className={index % 2 === 0 ? 'Par' : 'Impar'}>
-                                <td>{produto.id}</td>
-                                <td>{produto.nome}</td>
-                                <td>R$ {produto.preco}</td>
-                            </tr>
-                        )
-                    })
-                }
+                <tbody>
+                    {
+
+                        produtos.map((produto, index) => {
+                            return (
+                                <tr key={produto.id} border='0' className={index % 2 === 0 ? 'Par' : 'Impar'}>
+                                    <td>{produto.id}</td>
+                                    <td>{produto.nome}</td>
+                                    <td>R$ {produto.preco}</td>
+                                </tr>
+                            )
+                        })
+                    }
+                </tbody>
             </table>
         </div>
     );
