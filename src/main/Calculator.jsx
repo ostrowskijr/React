@@ -10,7 +10,7 @@ const initialState = {
     operation: null,
     resetDisplay: false,
     values: [0, 0],
-    current : 0
+    current: 0
 };
 export default class Calculador extends Component {
     state = { ...initialState };
@@ -19,69 +19,77 @@ export default class Calculador extends Component {
         super(props);
         this.clearMemory = this.clearMemory.bind(this);
         this.setOperation = this.setOperation.bind(this);
-        this.addDigit = this.addDigit.bind(this);        
+        this.addDigit = this.addDigit.bind(this);
+        this.calculate = this.calculate.bind(this);
     };
 
     clearMemory() {
-        this.setState({ 
-            ...initialState 
+        this.setState({
+            ...initialState
         });
-    };
-
-    setOperation(operation) {
-        if ((this.state.values[0] === 0 && this.state.values[1] === 0) || this.state.resetDisplay) {
-            return;
-        }        
-        if ((this.state.values[0] && this.state.values[1] && this.state.operation) || operation === "=") {
-            const total = eval(`${this.state.values[0]} ${this.state.operation} ${this.state.values[1]}`);
-            var state = {};
-            if (operation !== "=") {
-                var values = [...this.state.values];
-                values[0] = total;
-                var current = 1;
-                state = {
-                    ...initialState,
-                    resetDisplay : true,
-                    value : total,
-                    values,
-                    current,
-                    operation
-                 };                 
-            } else {
-                state = {
-                    ...initialState,
-                    resetDisplay : true,
-                    value : total
-                };
-            }
-            this.setState(state);
-        } else {
-            this.setState({
-                operation: operation,
-                current : 1,
-                resetDisplay : true
-            });
-        }        
     };
 
     addDigit(n) {
         if (n === '.' && this.state.value.includes('.')) {
             return;
         }
-        const resetDisplay = this.state.value === '0' || this.state.resetDisplay;        
+        const resetDisplay = this.state.value === '0' || this.state.resetDisplay;
         const currentValue = resetDisplay ? '' : this.state.value;
         const displayValue = currentValue + n;
-        if (n !== '.'){
-            const values = [...this.state.values];
-            const current = this.state.current;
-            values[current] = displayValue;
+        //
+        const values = [...this.state.values];
+        const current = this.state.current;
+        values[current] = parseFloat(displayValue);
+        this.setState({
+            resetDisplay: false,
+            value: displayValue,
+            values: values
+        });
+    };
+
+    setOperation(operation) {
+        // Manipulando o primeiro valor do cálculo.
+        if (this.state.current === 0) {
             this.setState({
-                resetDisplay : false,
-                value: displayValue,
-                values: values
-            });
-        }        
-    };    
+                current: 1,
+                resetDisplay: true,
+                operation
+            })
+        } else {
+            const equals = this.state.operation === '=';
+            const values = [...this.state.values]
+            const total = this.calculate(this.state.operation, values[0], values[1]);
+            values[0] = total;
+            this.setState({
+                value: total,
+                resetDisplay: true,
+                operation: equals ? null : operation,
+                current: !equals ? 0 : 1,
+                values
+            })
+        }
+    };
+
+    calculate(operation, valueFisrt, valueSecond) {
+        var newValue = 0;
+        switch (operation) {
+            case '+':
+                newValue = valueFisrt + valueSecond;
+                break;
+            case '-':
+                newValue = valueFisrt - valueSecond;
+                break;
+            case '*':
+                newValue = valueFisrt * valueSecond;
+                break;
+            case '/':
+                newValue = valueFisrt / valueSecond;
+                break;
+            default:
+                break;
+        }
+        return parseFloat(newValue).toFixed(2);
+    };
 
     render() {
         //
